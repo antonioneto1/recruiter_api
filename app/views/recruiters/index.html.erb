@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Recruiters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recruiters.each do |recruiter| %>
+      <tr>
+        <td><%= recruiter.name %></td>
+        <td><%= recruiter.email %></td>
+        <td><%= recruiter.password %></td>
+        <td><%= link_to 'Show', recruiter %></td>
+        <td><%= link_to 'Edit', edit_recruiter_path(recruiter) %></td>
+        <td><%= link_to 'Destroy', recruiter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Recruiter', new_recruiter_path %>

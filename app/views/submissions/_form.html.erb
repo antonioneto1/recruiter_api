@@ -1,0 +1,42 @@
+<%= form_with(model: submission, local: true) do |form| %>
+  <% if submission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(submission.errors.count, "error") %> prohibited this submission from being saved:</h2>
+
+      <ul>
+        <% submission.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mobile_phone %>
+    <%= form.text_field :mobile_phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :resume %>
+    <%= form.text_area :resume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :job_id %>
+    <%= form.text_field :job_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
