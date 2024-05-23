@@ -1,9 +1,10 @@
-class SessionsController < ApplicationController
+# app/controllers/api/sessions_controller.rb
+class Api::SessionsController < ApplicationController
   def create
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      token = AuthenticationService.encode({ user_id: user.id })
-      render json: { token: token }
+    recruiter = Recruiter.find_by(email: params[:email])
+    if recruiter&.authenticate(params[:password])
+      token = AuthenticationService.encode({ recruiter_id: recruiter.id })
+      render json: { token: token }, status: :created
     else
       render json: { error: 'Invalid email or password' }, status: :unprocessable_entity
     end

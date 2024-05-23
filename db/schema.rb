@@ -29,11 +29,12 @@ ActiveRecord::Schema.define(version: 2024_05_21_195952) do
   end
 
   create_table "recruiters", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_recruiters_on_email", unique: true
   end
 
   create_table "submissions", force: :cascade do |t|

@@ -1,70 +1,50 @@
 class Api::RecruitersController < ApplicationController
-  before_action :set_recruiter, only: %i[ show edit update destroy ]
+  before_action :set_recruiter, only: %i[show update destroy]
 
-  # GET /recruiters or /recruiters.json
+  # GET /recruiters
   def index
     @recruiters = Recruiter.all
+    render :index
   end
 
-  # GET /recruiters/1 or /recruiters/1.json
+  # GET /recruiters/1
   def show
+    render :show
   end
 
-  # GET /recruiters/new
-  def new
-    @recruiter = Recruiter.new
-  end
-
-  # GET /recruiters/1/edit
-  def edit
-  end
-
-  # POST /recruiters or /recruiters.json
+  # POST /recruiters
   def create
     @recruiter = Recruiter.new(recruiter_params)
 
-    respond_to do |format|
-      if @recruiter.save
-        format.html { redirect_to recruiter_url(@recruiter), notice: "Recruiter was successfully created." }
-        format.json { render :show, status: :created, location: @recruiter }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @recruiter.errors, status: :unprocessable_entity }
-      end
+    if @recruiter.save
+      render :show, status: :created, location: api_recruiter_url(@recruiter)
+    else
+      render json: @recruiter.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /recruiters/1 or /recruiters/1.json
+  # PATCH/PUT /recruiters/1
   def update
-    respond_to do |format|
-      if @recruiter.update(recruiter_params)
-        format.html { redirect_to recruiter_url(@recruiter), notice: "Recruiter was successfully updated." }
-        format.json { render :show, status: :ok, location: @recruiter }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @recruiter.errors, status: :unprocessable_entity }
-      end
+    if @recruiter.update(recruiter_params)
+      render :show, status: :ok, location: api_recruiter_url(@recruiter)
+    else
+      render json: @recruiter.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /recruiters/1 or /recruiters/1.json
+  # DELETE /recruiters/1
   def destroy
     @recruiter.destroy
-
-    respond_to do |format|
-      format.html { redirect_to recruiters_url, notice: "Recruiter was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_recruiter
-      @recruiter = Recruiter.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def recruiter_params
-      params.require(:recruiter).permit(:name, :email, :password)
-    end
+  def set_recruiter
+    @recruiter = Recruiter.find(params[:id])
+  end
+
+  def recruiter_params
+    params.require(:recruiter).permit(:name, :email, :password)
+  end
 end

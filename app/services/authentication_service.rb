@@ -1,10 +1,15 @@
+# app/services/authentication_service.rb
 class AuthenticationService
-  def self.encode(payload)
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+  SECRET_KEY = Rails.application.secret_key_base
+
+  def self.encode(payload, exp = 24.hours.from_now)
+    payload[:exp] = exp.to_i
+    JWT.encode(payload, SECRET_KEY)
   end
 
   def self.decode(token)
-    JWT.decode(token, Rails.application.secrets.secret_key_base).first
+    body = JWT.decode(token, SECRET_KEY)[0]
+    HashWithIndifferentAccess.new body
   rescue JWT::DecodeError
     nil
   end
