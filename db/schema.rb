@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2024_05_21_195952) do
     t.text "description"
     t.date "start_date"
     t.date "end_date"
-    t.string "status"
+    t.integer "status", default: 0
     t.text "skills"
     t.bigint "recruiter_id", null: false
     t.datetime "created_at", precision: 6, null: false

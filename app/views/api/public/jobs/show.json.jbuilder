@@ -1,0 +1,1 @@
+json.partial! 'api/publica/jobs/job', job: @job

@@ -1,5 +1,7 @@
-class Api::RecruitersController < ApplicationController
+# app/controllers/api/recruiter/recruiters_controller.rb
+class Api::Recruiter::RecruitersController < ApplicationController
   before_action :set_recruiter, only: %i[show update destroy]
+  before_action :authenticate_recruiter!, except: [:create]
 
   # GET /recruiters
   def index
@@ -9,7 +11,7 @@ class Api::RecruitersController < ApplicationController
 
   # GET /recruiters/1
   def show
-    render :show
+    render json: @recruiter
   end
 
   # POST /recruiters
@@ -17,7 +19,7 @@ class Api::RecruitersController < ApplicationController
     @recruiter = Recruiter.new(recruiter_params)
 
     if @recruiter.save
-      render :show, status: :created, location: api_recruiter_url(@recruiter)
+      render json: @recruiter, status: :created, location: api_recruiter_recruiter_url(@recruiter)
     else
       render json: @recruiter.errors, status: :unprocessable_entity
     end
@@ -26,7 +28,7 @@ class Api::RecruitersController < ApplicationController
   # PATCH/PUT /recruiters/1
   def update
     if @recruiter.update(recruiter_params)
-      render :show, status: :ok, location: api_recruiter_url(@recruiter)
+      render json: @recruiter
     else
       render json: @recruiter.errors, status: :unprocessable_entity
     end
