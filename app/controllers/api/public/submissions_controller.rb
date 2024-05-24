@@ -1,4 +1,3 @@
-# app/controllers/api/public/submissions_controller.rb
 class Api::Public::SubmissionsController < ApplicationController
   def create
     @submission = Submission.new(submission_params)

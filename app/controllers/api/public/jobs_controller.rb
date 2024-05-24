@@ -1,4 +1,3 @@
-# app/controllers/api/public/jobs_controller.rb
 class Api::Public::JobsController < ApplicationController
   def index
     @jobs = Job.where(status: 'active')
