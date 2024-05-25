@@ -11,6 +11,11 @@ class Api::Public::SubmissionsController < ApplicationController
     end
   end
 
+  def show
+    @submission = Submission.find(params[:id])
+    render json: @submission
+  end
+
   private
 
   def submission_params

@@ -1,4 +1,4 @@
-class Api::Recruiter::JobsController < ApplicationController
+class Api::RecruiterApi::JobsController < ApplicationController
   before_action :authenticate_recruiter!, except: %i[index show]
   before_action :set_recruiter
   before_action :set_job, only: %i[show update destroy]
@@ -6,12 +6,12 @@ class Api::Recruiter::JobsController < ApplicationController
   # GET /jobs
   def index
     @jobs = Job.all
-    render json: @jobs
+    render :index
   end
 
   # GET /jobs/1
   def show
-    render json: @job
+    render :show
   end
 
   # POST /jobs
@@ -19,7 +19,7 @@ class Api::Recruiter::JobsController < ApplicationController
     @job = @current_recruiter.jobs.new(job_params)
 
     if @job.save
-      render json: @job, status: :created, location: api_recruiter_job_url(@job)
+      render json: :show
     else
       render json: @job.errors, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class Api::Recruiter::JobsController < ApplicationController
   # PATCH/PUT /jobs/1
   def update
     if @job.update(job_params)
-      render json: @job
+      render :show
     else
       render json: @job.errors, status: :unprocessable_entity
     end

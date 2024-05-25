@@ -4,6 +4,7 @@ class Job < ApplicationRecord
   validates :recruiter_id, presence: true
 
   belongs_to :recruiter
+  has_many :submissions
 
   enum status: { active: 0, closed: 1 }
 end

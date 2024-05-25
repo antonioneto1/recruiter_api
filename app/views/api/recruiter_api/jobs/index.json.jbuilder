@@ -1,0 +1,1 @@
+json.array! @jobs, partial: 'api/recruiter_api/jobs/job', as: :job

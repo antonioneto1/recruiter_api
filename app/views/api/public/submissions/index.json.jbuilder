@@ -1,1 +1,1 @@
-json.array! @submissions, partial: 'api/submissions/public/submission', as: :submission
+json.array! @submissions, partial: 'api/public/submissions/submission', as: :submission

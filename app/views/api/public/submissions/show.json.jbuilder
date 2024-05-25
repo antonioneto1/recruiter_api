@@ -1,1 +1,1 @@
-json.extract! @submission, :id, :name, :email, :mobile_phone, :job_id
+json.partial! 'api/public/submissions/submission', submission: @submission

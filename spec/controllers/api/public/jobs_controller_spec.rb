@@ -1,34 +1,51 @@
-RSpec.describe Api::Public::JobsController, type: :controller do
-  describe 'GET #index' do
-    it 'returns a successful response' do
-      get :index
+require 'rails_helper'
+
+RSpec.describe 'Api::Public::Jobs', type: :request do
+  describe 'GET /api/public/jobs' do
+    it 'returns a success response' do
+      get '/api/public/jobs', headers: { 'ACCEPT' => 'application/json' }
       expect(response).to be_successful
+      expect(response.content_type).to eq('application/json; charset=utf-8')
     end
 
-    it 'assigns @jobs with active jobs' do
-      active_jobs = create_list(:job, 3, status: 'active')
-      get :index
-      expect(assigns(:jobs)).to match_array(active_jobs)
+    it 'returns all jobs when no search parameters are provided' do
+      job1 = create(:job, status: 'active')
+      job2 = create(:job, status: 'active')
+      get '/api/public/jobs', headers: { 'ACCEPT' => 'application/json' }
+      expect(JSON.parse(response.body).size).to eq(2)
     end
 
-    it 'filters jobs by title if title param is present' do
-      job_with_title = create(:job, title: 'Ruby Developer', status: 'active')
-      get :index, params: { title: 'Ruby' }
-      expect(assigns(:jobs)).to eq [job_with_title]
+    it 'returns jobs matching the title search parameter' do
+      job1 = create(:job, title: 'Ruby Developer', status: 'active')
+      job2 = create(:job, title: 'Python Developer', status: 'active')
+      get '/api/public/jobs', params: { title: 'Ruby' }, headers: { 'ACCEPT' => 'application/json' }
+      expect(JSON.parse(response.body).size).to eq(1)
+      expect(JSON.parse(response.body).first['title']).to eq('Ruby Developer')
+    end
+
+    it 'returns jobs matching the description search parameter' do
+      job1 = create(:job, description: 'Backend Developer', status: 'active')
+      job2 = create(:job, description: 'Frontend Developer', status: 'active')
+      get '/api/public/jobs', params: { description: 'Backend' }, headers: { 'ACCEPT' => 'application/json' }
+      expect(JSON.parse(response.body).size).to eq(1)
+      expect(JSON.parse(response.body).first['description']).to eq('Backend Developer')
+    end
+
+    it 'returns jobs matching the skills search parameter' do
+      job1 = create(:job, skills: 'Ruby, Rails', status: 'active')
+      job2 = create(:job, skills: 'Python, Django', status: 'active')
+      get '/api/public/jobs', params: { skills: 'Ruby' }, headers: { 'ACCEPT' => 'application/json' }
+      expect(JSON.parse(response.body).size).to eq(1)
+      expect(JSON.parse(response.body).first['skills']).to eq('Ruby, Rails')
     end
   end
 
-  describe 'GET #show' do
-    let(:job) { create(:job) }
-
-    it 'returns a successful response' do
-      get :show, params: { id: job.id }
+  describe 'GET /api/public/jobs/:id' do
+    it 'returns a success response' do
+      job = create(:job)
+      get "/api/public/jobs/#{job.id}", headers: { 'ACCEPT' => 'application/json' }
       expect(response).to be_successful
-    end
-
-    it 'assigns the requested job to @job' do
-      get :show, params: { id: job.id }
-      expect(assigns(:job)).to eq job
+      expect(response.content_type).to eq('application/json; charset=utf-8')
     end
   end
 end

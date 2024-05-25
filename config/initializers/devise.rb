@@ -27,7 +27,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ae6a7bb83e3b64614a8497fb87466451a6052e63360d50d35e4db9457edab43ab276df3c005b8e7101a8b67b46419b5925475a8261a5e2ca072b6a7494d01365'
+  # config.secret_key = 'ababa96cc759e99be98b6d3707cb652c5d740cfe2a913307c1adccfb7964cffed4724c862132842221f72c96c8d115eb7341a80468456c3e594930226ac2b2df'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -136,10 +136,10 @@ Devise.setup do |config|
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  config.stretches = Rails.env.test? ? 1 : 12
+  config.stretches = 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '53170f2e7504aea29ef8b2ce7604413af141203c5d7020a66f54ea8f22ba4afab1b744a97a77198d0e4384a5654c069f01a5c63394a64e1ed477cd21ae6345b3'
+  # config.pepper = '4dd10c0c2694134c3b0afc2681990ce7c2ee85694220cf5c4698051eb36244d69b25881eb2bde16c7043821f3a23dec465a367fd05db5e2a88b3ca1d3cabf8e8'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -191,7 +191,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 6..128
+  config.password_length = 4..8
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
@@ -251,7 +251,7 @@ Devise.setup do |config|
   # stretches to 10, and copy REST_AUTH_SITE_KEY to pepper).
   #
   # Require the `devise-encryptable` gem when using anything other than bcrypt
-  # config.encryptor = :sha512
+  config.encryptor = :bcrypt
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for

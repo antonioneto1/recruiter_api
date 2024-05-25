@@ -1,4 +1,4 @@
-RSpec.describe Api::Recruiter::RecruitersController, type: :controller do
+RSpec.describe Api::RecruiterApi::RecruitersController, type: :controller do
   let(:recruiter) { create(:recruiter) }
 
   describe "GET #index" do
@@ -57,7 +57,7 @@ RSpec.describe Api::Recruiter::RecruitersController, type: :controller do
   describe "PATCH #update" do
     context "with valid parameters" do
       it "updates the requested recruiter" do
-        new_name = "New Name"
+        new_name = "Jonh Doe"
         patch :update, params: { id: recruiter.id, recruiter: { name: new_name } }
         recruiter.reload
         expect(recruiter.name).to eq(new_name)
