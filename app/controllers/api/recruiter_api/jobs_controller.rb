@@ -19,7 +19,7 @@ class Api::RecruiterApi::JobsController < ApplicationController
     @job = @current_recruiter.jobs.new(job_params)
 
     if @job.save
-      render json: :show
+      render :show
     else
       render json: @job.errors, status: :unprocessable_entity
     end

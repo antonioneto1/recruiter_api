@@ -1,13 +1,16 @@
 require 'jwt'
-
 class JwtService
-  # Método para codificar um payload em um token JWT
-  def self.encode(payload)
-    JWT.encode(payload, Rails.application.credentials.devise_jwt_secret_key, 'HS256')
+  HMAC_SECRET = Rails.application.secrets.secret_key_base
+
+  def self.encode(payload, exp = 24.hours.from_now)
+    payload[:exp] = exp.to_i
+    JWT.encode(payload, HMAC_SECRET)
   end
 
-  # Método para decodificar um token JWT em um payload
   def self.decode(token)
-    JWT.decode(token, Rails.application.credentials.devise_jwt_secret_key, true, algorithm: 'HS256')
+    body = JWT.decode(token, HMAC_SECRET)[0]
+    HashWithIndifferentAccess.new(body)
+  rescue
+    nil
   end
 end
